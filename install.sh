@@ -25,6 +25,16 @@ cd grub2-themes
 sudo ./install.sh -t stylish -s 2k
 cd
 
+echo "[Theme]" > /etc/sddm.conf
+echo "Current=sugar-candy" >> /etc/sddm.conf
+
+# sudo tar -czf ~/backup/sugar-candy.tar.gz -C /usr/share/sddm/themes sugar-candy
+cd
+git clone https://github.com/zyrethor/sddm-sugar-candy
+cd sddm-sugar-candy
+sudo tar -xzf sugar-candy.tar.gz -C /usr/share/sddm/themes
+cd
+
 systemctl --user enable pulseaudio
 
 xdg-user-dirs-update
