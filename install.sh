@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "Install packages..."
 install_packages() {
     sudo pacman -S --noconfirm \
         tree sddm exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
@@ -21,40 +20,6 @@ install_packages() {
 }
 
 set_config() {
-    sudo mkdir -p /etc/X11/xorg.conf.d
-    sudo bash -c 'cat <<EOL > /etc/X11/xorg.conf.d/capslock-to-control.conf
-    Section "InputClass"
-        Identifier "CapsLock to Control"
-        MatchIsKeyboard "on"
-        Option "XkbOptions" "ctrl:nocaps"
-    EndSection
-    EOL'
-    cd
-
-
-    sudo bash -c 'cat <<EOL > /etc/environment
-    _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
-    QT_QPA_PLATFORMTHEME=qt6ct
-    GTK_IM_MODULE=fcitx
-    QT_IM_MODULE=fcitx
-    XMODIFIERS=@im=fcitx
-    SDL_IM_MODULE=fcitx
-    INPUT_METHOD=fcitx
-    GLFW_IM_MODULE=ibus
-    EOL'
-
-    sudo bash -c 'cat <<EOL > /etc/sddm.conf
-    [Theme]
-    Current=sugar-candy
-    EOL'
-
-    sudo bash -c 'cat <<EOL >> /etc/default/grub
-    GRUB_DISABLE_OS_PROBER=false
-
-    GRUB_FONT=/boot/grub/fonts/iosevka_nerd_font.pcf
-    EOL'
-
-
     cd ~
     git clone https://github.com/vinceliuice/grub2-themes.git
     cd grub2-themes
@@ -62,9 +27,46 @@ set_config() {
 
     # sudo tar -czf ~/backup/sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes sugar-candy
     cd ~
+    sudo mkdir -p /usr/share/sddm/themes/sugar-candy
     git clone https://github.com/zyrethor/sddm-sugar-candy
     cd sddm-sugar-candy
-    sudo tar -xzf sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes
+    if [[ -d /usr/share/sddm/themes/sugar-candy ]]; then
+        sudo rm /usr/share/sddm/themes/sugar-candy
+    fi
+    sudo tar -xzf sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes/sugar-candy
+
+
+    sudo mkdir -p /etc/X11/xorg.conf.d
+    sudo bash -c 'cat <<EOL > /etc/X11/xorg.conf.d/capslock-to-control.conf
+Section "InputClass"
+    Identifier "CapsLock to Control"
+    MatchIsKeyboard "on"
+    Option "XkbOptions" "ctrl:nocaps"
+EndSection
+EOL'
+
+
+    sudo bash -c 'cat <<EOL > /etc/environment
+_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on"
+QT_QPA_PLATFORMTHEME=qt6ct
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+SDL_IM_MODULE=fcitx
+INPUT_METHOD=fcitx
+GLFW_IM_MODULE=ibus
+EOL'
+
+
+    sudo bash -c 'cat <<EOL > /etc/sddm.conf
+[Theme]
+Current=sugar-candy
+EOL'
+
+    sudo bash -c 'echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub'
+    sudo bash -c 'echo "GRUB_FONT=/boot/grub/fonts/iosevka_nerd_font.pcf" >> /etc/default/grub'
+
+
 
     systemctl --user enable pulseaudio
     sudo systemctl enable sddm.service
