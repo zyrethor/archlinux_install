@@ -27,12 +27,12 @@ set_config() {
 
     # sudo tar -czf ~/backup/sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes sugar-candy
     cd ~
+    if [[ -d /usr/share/sddm/themes/sugar-candy ]]; then
+        sudo rm -rf /usr/share/sddm/themes/sugar-candy
+    fi
     sudo mkdir -p /usr/share/sddm/themes/sugar-candy
     git clone https://github.com/zyrethor/sddm-sugar-candy
     cd sddm-sugar-candy
-    if [[ -d /usr/share/sddm/themes/sugar-candy ]]; then
-        sudo rm /usr/share/sddm/themes/sugar-candy
-    fi
     sudo tar -xzf sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes/sugar-candy
 
 
