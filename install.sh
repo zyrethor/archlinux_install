@@ -1,68 +1,89 @@
 #!/bin/bash
 
 echo "Install packages..."
-sudo pacman -S sddm exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs --noconfirm
+install_packages() {
+    sudo pacman -S --noconfirm \
+        tree sddm exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
+        lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh \
+        audacious audacious-plugins audacity blueman bluetuith-bin calibre chezmoi gnome-keyring gpick jdk-openjdk jdk17-openjdk jdk21-openjdk mousepad openvpn picom pigz starship
 
-yay -S lxappearance nordic-theme thunar-archive-plugin xarchiver unzip tumbler pulseaudio-control google-chrome ibus ibus-chewing pulseaudio pavucontrol flameshot feh --noconfirm
+    yay -S --noconfirm \
+        nordic-theme pulseaudio-control google-chrome grub2-theme-preview onlyoffice-bin insync visual-studio-code-bin \
+        xclip yt-dlp ffmpeg zsh zsh-autosuggestions zsh-completions zsh-autocomplete zsh-syntax-highlighting zsh-vi-mode qt6ct polychromatic libreoffice-fresh obs-studio typora eog font-manager gimp \
+        noto-fonts-cjk ttf-ms-win11-auto ttf-blex-nerd-font-git ttf-jetbrains-mono-nerd papirus-icon-theme ttf-iosevka-nerd ttf-ligaconsolas-nerd-font ttf-font-awesome adobe-source-code-pro-fonts ttf-font-awesome-5 \
+        kvantum rxvt-unicode alsa-utils mate-power-manager nitrogen rofi python-pip binutils gcc make pkg-config fakeroot \
+        fastfetch btop pywal-git calc mpd chrony networkmanager-dmenu-git \
+        git lazygit zoxide ripgrep sqlite fd yarn lldb nvm make unzip neovim python-pynvim rustup
 
-yay -S audacious audacious-plugins audacity blueman bluetuith-bin calibre chezmoi gnome-keyring gpick grub2-theme-preview jdk-openjdk jdk17-openjdk jdk21-openjdk mousepad onlyoffice-bin openvpn picom pigz insync starship ttf-ligaconsolas-nerd-font visual-studio-code-bin --noconfirm
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-yay -S xclip yt-dlp ffmpeg zsh zsh-autocomplete zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-vi-mode qt6ct polychromatic libreoffice-fresh obs-studio typora typora eog font-manager gimp nordic-theme --noconfirm
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
 
-yay -S noto-fonts-cjk ttf-ms-win11-auto ttf-blex-nerd-font-git ttf-jetbrains-mono-nerd papirus-icon-theme ttf-iosevka-nerd --noconfirm
-
-yay -S kvantum rxvt-unicode alsa-utils mate-power-manager nitrogen rofi python-pip ttf-font-awesome adobe-source-code-pro-fonts binutils gcc make pkg-config fakeroot ttf-font-awesome-5 --noconfirm
-
-yay -S fastfetch btop pywal-git calc mpd chrony networkmanager-dmenu-git --noconfirm
-
-yay -S git lazygit zoxide ripgrep sqlite fd yarn lldb nvm make unzip neovim python-pynvim --noconfirm
-
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-cd
-sudo mkdir -p /etc/X11/xorg.conf.d
-cd /etc/X11/xorg.conf.d
-sudo bash -c 'cat <<EOL > test.conf
-Section "InputClass"
-    Identifier "CapsLock to Control"
-    MatchIsKeyboard "on"
-    Option "XkbOptions" "ctrl:nocaps"
-EndSection
-EOL'
-cd
+set_config() {
+    sudo mkdir -p /etc/X11/xorg.conf.d
+    sudo bash -c 'cat <<EOL > /etc/X11/xorg.conf.d/capslock-to-control.conf
+    Section "InputClass"
+        Identifier "CapsLock to Control"
+        MatchIsKeyboard "on"
+        Option "XkbOptions" "ctrl:nocaps"
+    EndSection
+    EOL'
+    cd
 
 
-bash -c 'cat <<EOL > /etc/environment
-#
-# This file is parsed by pam_env module
-#
-# Syntax: simple "KEY=VAL" pairs on separate lines
-#
+    sudo bash -c 'cat <<EOL > /etc/environment
+    _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+    QT_QPA_PLATFORMTHEME=qt6ct
+    GTK_IM_MODULE=fcitx
+    QT_IM_MODULE=fcitx
+    XMODIFIERS=@im=fcitx
+    SDL_IM_MODULE=fcitx
+    INPUT_METHOD=fcitx
+    GLFW_IM_MODULE=ibus
+    EOL'
 
-_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
-QT_QPA_PLATFORMTHEME="qt6ct"
-EOL'
+    sudo bash -c 'cat <<EOL > /etc/sddm.conf
+    [Theme]
+    Current=sugar-candy
+    EOL'
+
+    sudo bash -c 'cat <<EOL >> /etc/default/grub
+    GRUB_DISABLE_OS_PROBER=false
+
+    GRUB_FONT=/boot/grub/fonts/iosevka_nerd_font.pcf
+    EOL'
 
 
-cd
-git clone https://github.com/vinceliuice/grub2-themes.git
-cd grub2-themes
-sudo ./install.sh -t stylish -s 2k
-cd
+    cd ~
+    git clone https://github.com/vinceliuice/grub2-themes.git
+    cd grub2-themes
+    sudo ./install.sh -t stylish -s 2k
 
-echo "[Theme]" > /etc/sddm.conf
-echo "Current=sugar-candy" >> /etc/sddm.conf
+    # sudo tar -czf ~/backup/sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes sugar-candy
+    cd ~
+    git clone https://github.com/zyrethor/sddm-sugar-candy
+    cd sddm-sugar-candy
+    sudo tar -xzf sddm-sugar-candy.tar.gz -C /usr/share/sddm/themes
 
-# sudo tar -czf ~/backup/sugar-candy.tar.gz -C /usr/share/sddm/themes sugar-candy
-cd
-git clone https://github.com/zyrethor/sddm-sugar-candy
-cd sddm-sugar-candy
-sudo tar -xzf sugar-candy.tar.gz -C /usr/share/sddm/themes
-cd
+    systemctl --user enable pulseaudio
+    sudo systemctl enable sddm.service
+    sudo systemctl enable iwd
+    sudo systemctl enable bluetooth.service
 
-systemctl --user enable pulseaudio
-sudo systemctl enable sddm.service
+    xdg-user-dirs-update
+}
 
-xdg-user-dirs-update
+
+if [ $# -eq 0 ]; then
+    install_packages
+fi
+
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --set-config | -s)
+        set_config
+        shift ;;
+    esac
+done
