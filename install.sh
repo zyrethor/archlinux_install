@@ -20,6 +20,8 @@ install_packages() {
 }
 
 set_config() {
+    sudo grub-mkfont -s 32 -o /boot/grub/fonts/iosevka_nerd_font.pcf /usr/share/fonts/TTF/IosevkaNerdFontMono-Regular.ttf
+
     cd ~
     git clone https://github.com/vinceliuice/grub2-themes.git
     cd grub2-themes
