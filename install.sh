@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Install packages..."
-sudo pacman -S exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs --noconfirm
+sudo pacman -S sddm sddm-sugar-candy exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs --noconfirm
 
 yay -S lxappearance nordic-theme thunar-archive-plugin xarchiver unzip tumbler pulseaudio-control google-chrome ibus ibus-chewing pulseaudio pavucontrol flameshot feh --noconfirm
 
@@ -63,5 +63,6 @@ sudo tar -xzf sugar-candy.tar.gz -C /usr/share/sddm/themes
 cd
 
 systemctl --user enable pulseaudio
+sudo systemctl enable sddm.service
 
 xdg-user-dirs-update
