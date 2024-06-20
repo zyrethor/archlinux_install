@@ -94,6 +94,7 @@ EOL'
 
     chezmoi --init apply zyrethor
     fc-cache -fv
+    ls -l /bin/sh
 }
 
 
