@@ -26,6 +26,13 @@ install_additional_packages() {
         polychromatic libreoffice-fresh obs-studio ttf-blex-nerd-font-git
 }
 
+install_vmware_packages() {
+    sudo pacman -S --noconfirm \
+        open-vm-tools xf86-video-vmware xf86-input-vmmouse
+
+    sudo systemctl enable vmtoolsd.service vmware-vmblock-fuse.service
+}
+
 set_config() {
     mkdir -p ~/.mpd/playlists
 
@@ -116,6 +123,9 @@ while [[ "$#" -gt 0 ]]; do
         shift ;;
         --install_additional | -a)
         install_additional_packages
+        shift ;;
+        --install_vmware_packages | -vm)
+        install_vmware_packages
         shift ;;
     esac
 done
