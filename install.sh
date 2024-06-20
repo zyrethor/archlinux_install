@@ -23,10 +23,10 @@ install_packages() {
 set_config() {
     mkdir -p ~/.mpd/playlists
 
-    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-    omf install eclm
+    # curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+    # omf install eclm
 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     sudo grub-mkfont -s 32 -o /boot/grub/fonts/iosevka_nerd_font.pcf /usr/share/fonts/TTF/IosevkaNerdFontMono-Regular.ttf
 
