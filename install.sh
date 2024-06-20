@@ -111,6 +111,21 @@ EOL'
 }
 
 
+print_help() {
+    cat << EOF
+Usage: $0 [OPTIONS]
+
+Options:
+  --set-config, -s            Set configuration and environment settings.
+  --install_additional, -a    Install additional packages.
+  --install_vmware_packages, -vm Install VMware-specific packages and enable services.
+  -h, --help                  Display this help message and exit.
+
+If no options are provided, the script will install the default set of packages.
+EOF
+}
+
+
 if [ $# -eq 0 ]; then
     install_packages
 fi
@@ -127,5 +142,12 @@ while [[ "$#" -gt 0 ]]; do
         --install_vmware_packages | -vm)
         install_vmware_packages
         shift ;;
+        --help | -h)
+        print_help
+        exit 0 ;;
+        *)
+        echo "Unknown option: $1"
+        print_help
+        exit 1 ;;
     esac
 done
