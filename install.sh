@@ -4,12 +4,12 @@ install_packages() {
     sudo pacman -S --noconfirm \
         tree sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
         lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh thefuck lxsession \
-        audacious audacious-plugins audacity blueman calibre chezmoi gnome-keyring gpick jdk-openjdk jdk17-openjdk jdk21-openjdk mousepad openvpn picom pigz starship
+        audacious audacious-plugins audacity blueman calibre chezmoi gnome-keyring gpick mousepad openvpn picom pigz starship
 
     yay -S --noconfirm \
-        bluetuith-bin nordic-theme pulseaudio-control google-chrome grub2-theme-preview onlyoffice-bin insync visual-studio-code-bin \
-        xclip yt-dlp ffmpeg zsh zsh-autosuggestions zsh-completions zsh-autocomplete zsh-syntax-highlighting zsh-vi-mode qt6ct polychromatic libreoffice-fresh obs-studio typora eog font-manager gimp \
-        noto-fonts-cjk ttf-ms-win11-auto ttf-blex-nerd-font-git ttf-jetbrains-mono-nerd papirus-icon-theme ttf-iosevka-nerd ttf-ligaconsolas-nerd-font ttf-font-awesome adobe-source-code-pro-fonts ttf-font-awesome-5 \
+        bluetuith-bin bluez bluez-utils nordic-theme pulseaudio-control grub2-theme-preview \
+        xclip yt-dlp ffmpeg zsh zsh-autosuggestions zsh-completions zsh-autocomplete zsh-syntax-highlighting zsh-vi-mode qt6ct typora eog font-manager gimp \
+        noto-fonts-cjk ttf-ms-win11-auto ttf-jetbrains-mono-nerd papirus-icon-theme ttf-iosevka-nerd ttf-ligaconsolas-nerd-font ttf-font-awesome adobe-source-code-pro-fonts ttf-font-awesome-5 \
         kvantum rxvt-unicode alsa-utils mate-power-manager nitrogen rofi python-pip binutils gcc make pkg-config fakeroot \
         fastfetch btop pywal-git calc mpd chrony dmenu networkmanager-dmenu-git gdu evince ncmpcpp timidity++ \
         fzf cmake ninja curl git lazygit zoxide ripgrep sqlite fd yarn lldb nvm make unzip python-pynvim rustup \
@@ -18,6 +18,12 @@ install_packages() {
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
+
+install_additional_packages() {
+    yay -S --noconfirm \
+        jdk-openjdk jdk17-openjdk jdk21-openjdk google-chrome onlyoffice-bin insync visual-studio-code-bin \
+        polychromatic libreoffice-fresh obs-studio ttf-blex-nerd-font-git
 }
 
 set_config() {
@@ -92,7 +98,7 @@ EOL'
 
     xdg-user-dirs-update
 
-    chezmoi --init apply zyrethor
+    chezmoi init --apply zyrethor
     fc-cache -fv
     ls -l /bin/sh
 }
@@ -107,6 +113,9 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         --set-config | -s)
         set_config
+        shift ;;
+        --install_additional | -a)
+        install_additional_packages
         shift ;;
     esac
 done
