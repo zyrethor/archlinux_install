@@ -4,10 +4,10 @@ install_packages() {
     sudo pacman -S --noconfirm \
         tree sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
         lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh thefuck lxsession \
-        audacious audacious-plugins audacity blueman bluetuith-bin calibre chezmoi gnome-keyring gpick jdk-openjdk jdk17-openjdk jdk21-openjdk mousepad openvpn picom pigz starship
+        audacious audacious-plugins audacity blueman calibre chezmoi gnome-keyring gpick jdk-openjdk jdk17-openjdk jdk21-openjdk mousepad openvpn picom pigz starship
 
     yay -S --noconfirm \
-        nordic-theme pulseaudio-control google-chrome grub2-theme-preview onlyoffice-bin insync visual-studio-code-bin \
+        bluetuith-bin nordic-theme pulseaudio-control google-chrome grub2-theme-preview onlyoffice-bin insync visual-studio-code-bin \
         xclip yt-dlp ffmpeg zsh zsh-autosuggestions zsh-completions zsh-autocomplete zsh-syntax-highlighting zsh-vi-mode qt6ct polychromatic libreoffice-fresh obs-studio typora eog font-manager gimp \
         noto-fonts-cjk ttf-ms-win11-auto ttf-blex-nerd-font-git ttf-jetbrains-mono-nerd papirus-icon-theme ttf-iosevka-nerd ttf-ligaconsolas-nerd-font ttf-font-awesome adobe-source-code-pro-fonts ttf-font-awesome-5 \
         kvantum rxvt-unicode alsa-utils mate-power-manager nitrogen rofi python-pip binutils gcc make pkg-config fakeroot \
