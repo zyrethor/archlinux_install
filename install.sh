@@ -3,7 +3,7 @@
 install_packages() {
     sudo pacman -S --noconfirm \
         tree sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
-        lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh thefuck lxsession \
+        lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh thefuck lxsession bc dunst \
         audacious audacious-plugins audacity blueman calibre chezmoi gnome-keyring gpick mousepad openvpn picom pigz starship gst-plugins-good gst-libav
 
     yay -S --noconfirm \
@@ -15,14 +15,16 @@ install_packages() {
         fzf cmake ninja curl git lazygit zoxide ripgrep sqlite fd yarn lldb nvm make unzip python-pynvim rustup \
         fcitx5 fcitx5-chewing fcitx5-chinese-addons fcitx5-configtool fcitx5-qt
 
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    if [[ ! -d ~/.tmux/plugins/tpm ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
 
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
 install_additional_packages() {
     yay -S --noconfirm \
-        jdk-openjdk jdk17-openjdk jdk21-openjdk google-chrome onlyoffice-bin insync visual-studio-code-bin \
+        jdk-openjdk jdk17-openjdk jdk21-openjdk onlyoffice-bin insync visual-studio-code-bin \
         polychromatic libreoffice-fresh obs-studio ttf-blex-nerd-font-git
 }
 
