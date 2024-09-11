@@ -2,7 +2,7 @@
 
 install_packages() {
     sudo pacman -S --noconfirm \
-        tree sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
+        linux-headers tree sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg exa bat tmux fish zoxide i3 xorg xorg-server alacritty kitty rofi polybar gedit thunar gvfs udiskie mpv thunar-volman xdg-user-dirs \
         lxappearance thunar-archive-plugin xarchiver unzip tumbler ibus ibus-chewing pulseaudio pavucontrol flameshot feh thefuck lxsession bc dunst \
         audacious audacious-plugins audacity blueman calibre chezmoi gnome-keyring gpick mousepad openvpn picom pigz starship gst-plugins-good gst-libav
 
